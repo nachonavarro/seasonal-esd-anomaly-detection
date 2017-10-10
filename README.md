@@ -1,5 +1,7 @@
 # Anomaly Detection: Seasonal ESD
 
+<small>Note: All credit goes to Jordan Hochenbaum, Owen S. Vallis and Arun Kejariwa at Twitter, Inc. Any errors in the code is, of course, my mistake. Feel free to fix them.</small>
+
 ## Intro
 Seasonal ESD is an anomaly detection algorithm implemented at Twitter https://arxiv.org/pdf/1704.07706.pdf. What better definition than the one they use in their paper:
 
@@ -13,6 +15,17 @@ Seasonal ESD is an anomaly detection algorithm implemented at Twitter https://ar
 > deviation (MAD) – to accurately detect anomalies, even in
 > the presence of seasonal spikes."
 
+### Explanation
+The algorithm uses the Extreme Studentized Deviate test to calculate the anomalies. In fact, the novelty doesn't come
+in the fact that ESD is used, but rather on _what_ it is tested.
+
+The problem with the ESD test on its own is that it assumes a normal data distribution, while real world data can have a multimodal distribution. To circumvent this, STL decomposition is used. Any time series can be decomposed with STL decomposition into a seasonal, trend, and residual component. The key is that the residual has a unimodal distribution that ESD can test. 
+
+However, there is still the problem that extreme, spurious anomalies can corrupt the residual component. To fix it, the paper proposes to use the median to represent the "stable" trend, instead of the trend found by means of STL decomposition.
+
+Finally, for data sets that have a high percentage of anomalies, the research papers proposes to use the Median Absolute Deviate (MAD) instead of the median when computing the residual. Using MAD enables a more consistent measure of central tendency of a time series with a high percentage of anomalies. 
+
+---
 
 ## Usage
 
