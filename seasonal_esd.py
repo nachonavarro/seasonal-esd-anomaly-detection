@@ -41,9 +41,9 @@ def seasonal_esd(ts, seasonality=None, hybrid=False, max_anomalies=10, alpha=0.0
     """Compute the Seasonal Extreme Studentized Deviate of a time series. 
        The steps taken are first to to decompose the timeseries into STL 
        decomposition (trend, seasonality, residual). Then, calculate 
-       the Median Absolute Deviate (MAD) and perform a regular ESD
-       test on the residual, which we calculate as:
-                        R = ts - seasonality - MAD
+       the Median Absolute Deviate (MAD) if hybrid (otherwise the median) 
+       and perform a regular ESD test on the residual, which we calculate as:
+                        R = ts - seasonality - MAD or median
        
        Note: The statsmodel library requires a seasonality to compute the STL
        decomposition, hence the parameter seasonality. If none is given,
