@@ -3,11 +3,32 @@ import scipy.stats as stats
 import statsmodels.api as sm
 
 def calculate_test_statistic(ts):
+    """Calculate the test statistic defined by being
+       the top zscore in the timeseries.
+
+    Args:
+        ts (list or np.array): The timeseries to compute the test statistic.
+
+    Returns:
+        tuple(int, float): The index of the top zscore and the value of the top zscore.
+
+    """
     zscores = abs(stats.zscore(ts, ddof=1))
     max_idx = np.argmax(zscores)
     return max_idx, zscores[max_idx]
 
 def calculate_critical_value(ts, alpha):
+    """Calculate the critical value with the formula given for example in
+    https://en.wikipedia.org/wiki/Grubbs%27_test_for_outliers#Definition
+
+    Args:
+        ts (list or np.array): The timeseries to compute the critical value.
+        alpha (float): The significance level.
+
+    Returns:
+        float: The critical value for this test.
+
+    """
     size   = len(ts)
     t_dist = stats.t.ppf(1 - alpha / (2 * size), size - 2)
     
