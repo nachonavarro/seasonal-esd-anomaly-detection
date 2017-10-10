@@ -89,7 +89,7 @@ def esd(timeseries, max_anomalies=10, alpha=0.05):
     """
     ts = np.copy(np.array(timeseries))
     test_statistics = []
-    total_anomalies = 0
+    total_anomalies = -1
     for curr in range(max_anomalies):
         test_idx, test_val = calculate_test_statistic(ts)
         critical_value     = calculate_critical_value(ts, alpha)
