@@ -1,6 +1,6 @@
 # Anomaly Detection: Seasonal ESD
 
-<small>Note: All credit goes to Jordan Hochenbaum, Owen S. Vallis and Arun Kejariwa at Twitter, Inc. Any errors in the code is, of course, my mistake. Feel free to fix them.</small>
+Note: All credit goes to Jordan Hochenbaum, Owen S. Vallis and Arun Kejariwa at Twitter, Inc. Any errors in the code are, of course, my mistake. Feel free to fix them.
 
 ## Intro
 Seasonal ESD is an anomaly detection algorithm implemented at Twitter https://arxiv.org/pdf/1704.07706.pdf. What better definition than the one they use in their paper:
