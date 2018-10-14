@@ -2,7 +2,7 @@ import numpy as np
 import scipy.stats as stats
 import statsmodels.api as sm
 
-def calculate_test_statistic(ts):
+def calculate_test_statistic(ts, test_statistics):
     """Calculate the test statistic defined by being
        the top zscore in the timeseries.
 
@@ -13,11 +13,15 @@ def calculate_test_statistic(ts):
         tuple(int, float): The index of the top zscore and the value of the top zscore.
 
     """
-    zscores = abs(stats.zscore(ts, ddof=1))
+    corrected_ts = np.ma.array(ts, mask=False)
+    for anomalous_index in test_statistics:
+        corrected_ts.mask[anomalous_index] = True
+    zscores = abs(stats.zscore(corrected_ts, ddof=1))
+    print(zscores[:10])
     max_idx = np.argmax(zscores)
     return max_idx, zscores[max_idx]
 
-def calculate_critical_value(ts, alpha):
+def calculate_critical_value(size, alpha):
     """Calculate the critical value with the formula given for example in
     https://en.wikipedia.org/wiki/Grubbs%27_test_for_outliers#Definition
 
@@ -29,7 +33,6 @@ def calculate_critical_value(ts, alpha):
         float: The critical value for this test.
 
     """
-    size   = len(ts)
     t_dist = stats.t.ppf(1 - alpha / (2 * size), size - 2)
     
     numerator   = (size - 1) * t_dist
@@ -91,12 +94,11 @@ def esd(timeseries, max_anomalies=10, alpha=0.05):
     test_statistics = []
     total_anomalies = -1
     for curr in range(max_anomalies):
-        test_idx, test_val = calculate_test_statistic(ts)
-        critical_value     = calculate_critical_value(ts, alpha)
+        test_idx, test_val = calculate_test_statistic(ts, test_statistics)
+        critical_value     = calculate_critical_value(len(ts) - len(test_statistics), alpha)
         if test_val > critical_value:
             total_anomalies = curr
         test_statistics.append(test_idx)
-        ts = np.delete(ts, test_idx)
     anomalous_indices = test_statistics[:total_anomalies + 1]
     return anomalous_indices
 
