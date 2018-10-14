@@ -17,7 +17,6 @@ def calculate_test_statistic(ts, test_statistics):
     for anomalous_index in test_statistics:
         corrected_ts.mask[anomalous_index] = True
     zscores = abs(stats.zscore(corrected_ts, ddof=1))
-    print(zscores[:10])
     max_idx = np.argmax(zscores)
     return max_idx, zscores[max_idx]
 
