@@ -17,6 +17,8 @@ Seasonal ESD is an anomaly detection algorithm implemented at Twitter https://ar
 
 ## Installation
 
+To install `sesd`, use pip:
+
 ```python
 pip install sesd
 ```
