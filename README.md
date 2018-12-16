@@ -15,6 +15,13 @@ Seasonal ESD is an anomaly detection algorithm implemented at Twitter https://ar
 > deviation (MAD) – to accurately detect anomalies, even in
 > the presence of seasonal spikes."
 
+## Installation
+
+```python
+pip install sesd
+```
+
+
 ### Explanation
 The algorithm uses the Extreme Studentized Deviate test to calculate the anomalies. In fact, the novelty doesn't come
 in the fact that ESD is used, but rather on _what_ it is tested.
