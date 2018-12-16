@@ -38,8 +38,40 @@ ts[14] = 9
 ts[83] = 10
 outliers_indices = sesd.seasonal_esd(ts, hybrid=True, max_anomalies=2)
 for idx in outliers_indices:
-	print "Anomaly index: {0}, anomaly value: {1}".format(idx, ts[idx])
+    print "Anomaly index: {0}, anomaly value: {1}".format(idx, ts[idx])
 
 >>> Anomaly index: 83, anomaly value: 10.0
 >>> Anomaly index: 14, anomaly value: 9.0
 ```
+
+--- 
+
+## Documentation
+
+
+* `seasonal_esd(seasonality=None, hybrid=False, max_anomalies=10, alpha=0.05)`: Computes the Seasonal Extreme Studentized Deviate of a time series. The steps taken are first to to decompose the time series into STL decomposition (trend, seasonality, residual). Then, calculate the Median Absolute Deviate (MAD) if hybrid (otherwise the median) and perform a regular ESD test on the residual, which we calculate as: `R = ts - seasonality - MAD or median.
+
+    * Arguments
+
+        * `ts`: The time series to compute the SESD.
+        * `seasonality`: The statsmodel library requires a seasonality to compute the STL decomposition If none is given, then it will automatically be calculated to be 20% of the total time series.
+        * `hybrid`: See Twitter’s research paper for the difference.
+        max_anomalies: The number of times the Grubbs’ Test will be applied to the time series.
+        * `alpha`: the significance level.
+    
+    * Returns
+
+        * The indices of the anomalies in the time series.
+
+* `esd(timeseries, max_anomalies=10, alpha=0.05)`: Computes the Extreme Studentized Deviate of a time series. A Grubbs Test is performed max_anomalies times with the caveat that each time the top value is removed. For more details visit http://www.itl.nist.gov/div898/handbook/eda/section3/eda35h3.htm
+
+    * Arguments
+
+        * `ts`: The time series to compute the ESD.
+        max_anomalies: The number of times the Grubbs’ Test will be applied to the time series.
+        * `alpha`: the significance level.
+    
+    * Returns
+
+        * The indices of the anomalies in the time series.
+
