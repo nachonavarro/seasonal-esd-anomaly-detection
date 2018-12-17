@@ -40,7 +40,7 @@ Finally, for data sets that have a high percentage of anomalies, the research pa
 
 ```python
 import numpy as np
-import seasonal_esd as sesd
+import sesd
 ts = np.random.random(100)
 # Introduce artificial anomalies
 ts[14] = 9
