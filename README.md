@@ -32,7 +32,7 @@ The problem with the ESD test on its own is that it assumes a normal data distri
 
 However, there is still the problem that extreme, spurious anomalies can corrupt the residual component. To fix it, the paper proposes to use the median to represent the "stable" trend, instead of the trend found by means of STL decomposition.
 
-Finally, for data sets that have a high percentage of anomalies, the research papers proposes to use the Median Absolute Deviate (MAD) instead of the median when computing the residual. Using MAD enables a more consistent measure of central tendency of a time series with a high percentage of anomalies. 
+Finally, for data sets that have a high percentage of anomalies, the research papers proposes to use the median and Median Absolute Deviate (MAD) instead of the mean and standard deviation to compute the zscore. Using MAD enables a more consistent measure of central tendency of a time series with a high percentage of anomalies.
 
 ---
 
@@ -72,13 +72,14 @@ for idx in outliers_indices:
 
         * The indices of the anomalies in the time series.
 
-* `esd(timeseries, max_anomalies=10, alpha=0.05)`: Computes the Extreme Studentized Deviate of a time series. A Grubbs Test is performed max_anomalies times with the caveat that each time the top value is removed. For more details visit http://www.itl.nist.gov/div898/handbook/eda/section3/eda35h3.htm
+* `esd(timeseries, max_anomalies=10, alpha=0.05, hybrid=False)`: Computes the Extreme Studentized Deviate of a time series. A Grubbs Test is performed max_anomalies times with the caveat that each time the top value is removed. For more details visit http://www.itl.nist.gov/div898/handbook/eda/section3/eda35h3.htm
 
     * Arguments
 
         * `ts`: The time series to compute the ESD.
         max_anomalies: The number of times the Grubbs’ Test will be applied to the time series.
         * `alpha`: the significance level.
+        * `hybrid`: If set to false then the mean and standard deviation will be used to calculate the zscores in the Grubbs test. If set to true, then median and MAD will be used.
     
     * Returns
 
