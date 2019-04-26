@@ -2,7 +2,15 @@ import numpy as np
 import scipy.stats as stats
 import statsmodels.api as sm
 
-def calculate_test_statistic(ts, test_statistics):
+def calculate_zscore(ts, hybrid=False):
+    if hybrid:
+        median = np.median(ts)
+        mad    = np.median(np.abs(ts - median))
+        return (ts - median) / mad
+    else:
+        return stats.zscore(ts, ddof=1)
+
+def calculate_test_statistic(ts, test_statistics, hybrid=False):
     """Calculate the test statistic defined by being
        the top zscore in the timeseries.
 
@@ -16,7 +24,7 @@ def calculate_test_statistic(ts, test_statistics):
     corrected_ts = np.ma.array(ts, mask=False)
     for anomalous_index in test_statistics:
         corrected_ts.mask[anomalous_index] = True
-    zscores = abs(stats.zscore(corrected_ts, ddof=1))
+    zscores = abs(calculate_zscore(corrected_ts, hybrid=hybrid))
     max_idx = np.argmax(zscores)
     return max_idx, zscores[max_idx]
 
@@ -66,15 +74,11 @@ def seasonal_esd(ts, seasonality=None, hybrid=False, max_anomalies=10, alpha=0.0
     ts = np.array(ts)
     seasonal = seasonality or int(0.2 * len(ts)) # Seasonality is 20% of the ts if not given.
     decomp   = sm.tsa.seasonal_decompose(ts, freq=seasonal)
-    if hybrid:
-        mad      = np.median(np.abs(ts - np.median(ts)))
-        residual = ts - decomp.seasonal - mad
-    else:
-        residual = ts - decomp.seasonal - np.median(ts)
-    outliers = esd(residual, max_anomalies=max_anomalies, alpha=alpha)
+    residual = ts - decomp.seasonal - np.median(ts)
+    outliers = esd(residual, max_anomalies=max_anomalies, alpha=alpha, hybrid=hybrid)
     return outliers
 
-def esd(timeseries, max_anomalies=10, alpha=0.05):
+def esd(timeseries, max_anomalies=10, alpha=0.05, hybrid=False):
     """Compute the Extreme Studentized Deviate of a time series. 
        A Grubbs Test is performed max_anomalies times with the caveat 
        that each time the top value is removed. For more details visit
@@ -93,7 +97,7 @@ def esd(timeseries, max_anomalies=10, alpha=0.05):
     test_statistics = []
     total_anomalies = -1
     for curr in range(max_anomalies):
-        test_idx, test_val = calculate_test_statistic(ts, test_statistics)
+        test_idx, test_val = calculate_test_statistic(ts, test_statistics, hybrid=hybrid)
         critical_value     = calculate_critical_value(len(ts) - len(test_statistics), alpha)
         if test_val > critical_value:
             total_anomalies = curr
