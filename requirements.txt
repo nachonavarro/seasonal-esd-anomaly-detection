@@ -1,0 +1,3 @@
+numpy==1.17.4
+scipy==1.3.2
+stldecompose==0.0.5
