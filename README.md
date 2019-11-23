@@ -1,4 +1,5 @@
 # Anomaly Detection: Seasonal ESD
+<a href="https://travis-ci.com/nachonavarro/seasonal-esd-anomaly-detection.svg?branch=master"><img src="https://travis-ci.com/nachonavarro/seasonal-esd-anomaly-detection.svg?branch=master" /></a>
 
 Note: All credit goes to Jordan Hochenbaum, Owen S. Vallis and Arun Kejariwa at Twitter, Inc. Any errors in the code are, of course, my mistake. Feel free to fix them.
 
