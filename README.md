@@ -54,6 +54,11 @@ for idx in outliers_indices:
 >>> Anomaly index: 14, anomaly value: 9.0
 ```
 
+> **_Note:_**  The algorithm is sensitive to the periodicity you give it. If you are getting
+wrong anomalies indices play around with the periodicity or increase the
+maximum number of anomalies to see if the algorithm eventually finds the anomalies
+you expect.
+
 --- 
 
 ## Documentation
