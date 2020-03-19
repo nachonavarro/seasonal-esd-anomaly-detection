@@ -20,7 +20,7 @@ Seasonal ESD is an anomaly detection algorithm implemented at Twitter https://ar
 
 To install `sesd`, use pip:
 
-```python
+```
 pip install sesd
 ```
 
@@ -48,7 +48,7 @@ ts[14] = 9
 ts[83] = 10
 outliers_indices = sesd.seasonal_esd(ts, hybrid=True, max_anomalies=2)
 for idx in outliers_indices:
-    print("Anomaly index: {}, anomaly value: {}".format(idx, ts[idx]))
+    print(f'Anomaly index: {idx}, anomaly value: {ts[idx]}')
 
 >>> Anomaly index: 83, anomaly value: 10.0
 >>> Anomaly index: 14, anomaly value: 9.0
@@ -64,9 +64,9 @@ for idx in outliers_indices:
     * Arguments
 
         * `ts`: The time series to compute the SESD.
-        * `seasonality`: The statsmodel library requires a seasonality to compute the STL decomposition If none is given, then it will automatically be calculated to be 20% of the total time series.
+        * `periodicity`: The statsmodel library requires a periodicity to compute the STL decomposition If none is given, then it will automatically be calculated to be 20% of the total time series.
         * `hybrid`: See Twitter’s research paper for the difference.
-        max_anomalies: The number of times the Grubbs’ Test will be applied to the time series.
+        * `max_anomalies: The number of times the Grubbs’ Test will be applied to the time series.
         * `alpha`: the significance level.
     
     * Returns
@@ -78,9 +78,9 @@ for idx in outliers_indices:
     * Arguments
 
         * `ts`: The time series to compute the ESD.
-        max_anomalies: The number of times the Grubbs’ Test will be applied to the time series.
+        * `max_anomalies`: The number of times the Grubbs’ Test will be applied to the time series.
         * `alpha`: the significance level.
-        * `hybrid`: If set to false then the mean and standard deviation will be used to calculate the zscores in the Grubbs test. If set to true, then median and MAD will be used.
+        * `hybrid`: If set to fa`lse then the mean and standard deviation will be used to calculate the zscores in the Grubbs test. If set to true, then median and MAD will be used.
     
     * Returns
 

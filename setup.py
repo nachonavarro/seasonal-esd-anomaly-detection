@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
     name="sesd",
-    version="0.1.8",
+    version="0.2",
     author="Nacho Navarro",
     author_email="nachonavarroasv@gmail.com",
     description="Anomaly detection algorithm implemented at Twitter",
@@ -16,9 +16,9 @@ setuptools.setup(
     install_requires=[
           'numpy',
           'scipy',
-          'stldecompose'
+          'statsmodels'
     ],
-    tests_require=["pytest"],
+    tests_require=[],
     classifiers=[
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 3",
