@@ -71,7 +71,7 @@ you expect.
         * `ts`: The time series to compute the SESD.
         * `periodicity`: The statsmodel library requires a periodicity to compute the STL decomposition If none is given, then it will automatically be calculated to be 20% of the total time series.
         * `hybrid`: See Twitter’s research paper for the difference.
-        * `max_anomalies: The number of times the Grubbs’ Test will be applied to the time series.
+        * `max_anomalies`: The number of times the Grubbs’ Test will be applied to the time series.
         * `alpha`: the significance level.
     
     * Returns
@@ -85,7 +85,7 @@ you expect.
         * `ts`: The time series to compute the ESD.
         * `max_anomalies`: The number of times the Grubbs’ Test will be applied to the time series.
         * `alpha`: the significance level.
-        * `hybrid`: If set to fa`lse then the mean and standard deviation will be used to calculate the zscores in the Grubbs test. If set to true, then median and MAD will be used.
+        * `hybrid`: If set to false then the mean and standard deviation will be used to calculate the zscores in the Grubbs test. If set to true, then median and MAD will be used.
     
     * Returns
 
